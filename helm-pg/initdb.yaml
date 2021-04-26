@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "trtjob"
+spec:
+  template:
+    metadata:
+      name: "trtjob"
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: post-install-job
+          image: postgres:latest
+          env:
+          - name: POSTGRES_PASSWORD
+            value: "postgres"
+          command:
+            - sh
+            - "-c"
+            - |
+              psql postgres://trtuser:passwd@postgres/trtdb <<'EOF'
+                CREATE TABLE IF NOT EXISTS users (id serial PRIMARY KEY, name VARCHAR(255));
+                INSERT INTO users (name) VALUES ('Ivan');
+                INSERT INTO users (name) VALUES ('Alert');
+                INSERT INTO users (name) VALUES ('Info');
+                INSERT INTO users (name) VALUES ('Warning');
+                INSERT INTO users (name) VALUES ('Protoss');
+              EOF
+
+  backoffLimit: 0

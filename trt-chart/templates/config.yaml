@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: trt-config
+data:
+  APP_TITLE: Trt Nodejs App
+  PGHOST: postgres
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: trt-secret
+data:
+  PGUSER: dHJ0dXNlcg==
+  PGDATABASE: dHJ0ZGI=
+  PGPASSWORD: cGFzc3dk
+  PGPORT: NTQzMg==
